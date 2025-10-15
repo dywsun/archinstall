@@ -17,7 +17,7 @@ aur_install() {
   [ -d "$TEMP_PACKAGES_DIR" ] || sudo -u "$name" mkdir -p "$TEMP_PACKAGES_DIR"
   for item in $@; do
     sudo -u "$name" git -C "$TEMP_PACKAGES_DIR" clone "https://aur.archlinux.org/${item}.git" && \
-    sudo -u "$name" sed -iE 's#https://github\.com#https://ghproxy\.com/&#g' "$TEMP_PACKAGES_DIR/$item/PKGBUILD" && \
+    sudo -u "$name" sed -iE 's#https://github\.com#https://ghproxy\.cn/&#g' "$TEMP_PACKAGES_DIR/$item/PKGBUILD" && \
     pushd "$TEMP_PACKAGES_DIR/$item" && \
     sudo -u "$name" GOPROXY="https://goproxy.cn" makepkg --noconfirm -si && \
     popd || echo -e "########## AUR: Install $item failed! ##########\n"
