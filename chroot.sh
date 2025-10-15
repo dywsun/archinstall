@@ -5,7 +5,7 @@ set -e
 USER_HOME="/home/$name"
 USER_LOCAL_HOME="$USER_HOME/.local"
 USER_CONFIG_HOME="$USER_HOME/.config"
-MIRROR_GITHUB_URL_PREFIX="https://ghproxy.com"
+MIRROR_GITHUB_URL_PREFIX="https://ghproxy.cn"
 MIRROR_GITHUB_URL="$MIRROR_GITHUB_URL_PREFIX/https://github.com"
 TEMP_PACKAGES_DIR="/tmp/packages"
 
@@ -52,7 +52,7 @@ cat << EOF >> /etc/hosts
 ::1	localhost
 127.0.0.1	$HOSTNAME.localdomain	$HOSTNAME
 EOF
-sh -c "$(curl -fsL $MIRROR_GITHUB_URL_PREFIX/https://raw.githubusercontent.com/neverwaiting/dotfiles/master/.local/bin/github_speed_up)"
+sh -c "$(curl -fsL $MIRROR_GITHUB_URL_PREFIX/https://raw.githubusercontent.com/dywsun/dotfiles/master/.local/bin/github_speed_up)"
 
 # update mirror source
 pacman_install reflector
@@ -113,7 +113,7 @@ sudo -u "$name" git -C "$USER_FCITX_THEME_DIR" clone "$MIRROR_GITHUB_URL/sxqsfun
 sudo -u "$name" cp -r "$USER_FCITX_THEME_DIR/fcitx5-sogou-themes/Alpha-black" "$USER_FCITX_THEME_DIR"
 
 # install packages in packages.csv file
-curl -fsL "$MIRROR_GITHUB_URL_PREFIX/https://raw.github.com/neverwaiting/archinstall/master/packages.csv" > /tmp/packages.csv
+curl -fsL "$MIRROR_GITHUB_URL_PREFIX/https://raw.github.com/dywsun/archinstall/master/packages.csv" > /tmp/packages.csv
 while IFS=',' read -a packs; do
   if [ -z "${packs[0]}" ]; then
     if pacman -Ss "${packs[1]}" >> /dev/null; then

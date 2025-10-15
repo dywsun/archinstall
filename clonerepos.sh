@@ -1,9 +1,9 @@
 #!/bin/sh
 
-remote_user="git@github.com:neverwaiting"
+remote_user="git@github.com:dywsun"
 # personal_remote_repo="git@zwled.xyz:/srv/git"
 
-ssh-keygen -t ed25519 -C "nerverstop@163.com"
+ssh-keygen -t ed25519 -C "zdynstop@gmail.com"
 
 cat "$HOME/.ssh/id_ed25519.pub" | xclip -i -selection clipboard
 echo -e "\e[34mpublic-key:\e[33m"
