@@ -56,11 +56,16 @@ sh -c "$(curl -fsL $MIRROR_GITHUB_URL_PREFIX/https://raw.githubusercontent.com/d
 
 # update mirror source
 pacman_install reflector
-reflector --country China --latest 5 --protocol http --protocol https --sort rate --save /etc/pacman.d/mirrorlist > /dev/null 2>&1
+# reflector --country China --latest 5 --protocol http --protocol https --sort rate --save /etc/pacman.d/mirrorlist > /dev/null 2>&1
+cat <<EOF > /etc/pacman.d/mirrorlist
+Server = https://mirrors.ustc.edu.cn/archlinux/\$repo/os/\$arch
+Server = http://mirrors.ustc.edu.cn/archlinux/\$repo/os/\$arch
+EOF
+
 cat << EOF >> /etc/pacman.conf
 [archlinuxcn]
 SigLevel = Optional TrustAll
-Server = https://opentuna.cn/archlinuxcn/\$arch
+Server = https://mirrors.ustc.edu.cn/archlinuxcn/\$arch
 EOF
 pacman -Sy --noconfirm archlinux-keyring archlinuxcn-keyring
 
@@ -136,7 +141,7 @@ aur_install yay
 [ -x /opt/YesPlayMusic/yesplaymusic ] && ln -sf /opt/YesPlayMusic/yesplaymusic /bin/yesplaymusic
 
 # set dotfiles
-sudo -u "$name" git clone "$MIRROR_GITHUB_URL/neverwaiting/dotfiles.git" "$USER_HOME/dotfiles"&& \
+sudo -u "$name" git clone "$MIRROR_GITHUB_URL/dywsun/dotfiles.git" "$USER_HOME/dotfiles"&& \
 sudo -u "$name" cp -r "$USER_HOME/dotfiles/.config" "$USER_HOME/" && \
 sudo -u "$name" cp -r "$USER_HOME/dotfiles/.local" "$USER_HOME/" && \
 sudo -u "$name" cp -P "$USER_HOME/dotfiles/.zprofile" "$USER_HOME/" && \
