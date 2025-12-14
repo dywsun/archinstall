@@ -54,8 +54,10 @@ cat << EOF >> /etc/hosts
 EOF
 sh -c "$(curl -fsL $MIRROR_GITHUB_URL_PREFIX/https://raw.githubusercontent.com/dywsun/dotfiles/master/.local/bin/github_speed_up)"
 
+cat /etc/hosts
+
 # update mirror source
-pacman_install reflector
+# pacman_install reflector
 # reflector --country China --latest 5 --protocol http --protocol https --sort rate --save /etc/pacman.d/mirrorlist > /dev/null 2>&1
 cat <<EOF > /etc/pacman.d/mirrorlist
 Server = https://mirrors.ustc.edu.cn/archlinux/\$repo/os/\$arch
@@ -63,10 +65,13 @@ Server = http://mirrors.ustc.edu.cn/archlinux/\$repo/os/\$arch
 EOF
 
 cat << EOF >> /etc/pacman.conf
+
 [archlinuxcn]
-SigLevel = Optional TrustAll
 Server = https://mirrors.ustc.edu.cn/archlinuxcn/\$arch
 EOF
+
+pacman-key --init
+pacman-key --populate
 pacman -Sy --noconfirm archlinux-keyring archlinuxcn-keyring
 
 pacman_install zsh
