@@ -87,9 +87,13 @@ mount ${PARTITION[2]} /mnt
 mkdir /mnt/boot
 mount ${PARTITION[0]} /mnt/boot
 
-reflector --country China --latest 5 --protocol http --protocol https --sort rate --save /etc/pacman.d/mirrorlist > /dev/null 2>&1
+# reflector --country China --latest 5 --protocol http --protocol https --sort rate --save /etc/pacman.d/mirrorlist > /dev/null 2>&1
+cat <<EOF > /etc/pacman.d/mirrorlist
+Server = https://mirrors.ustc.edu.cn/archlinux/\$repo/os/\$arch
+Server = http://mirrors.ustc.edu.cn/archlinux/\$repo/os/\$arch
+EOF
 
-echo -e "[archlinuxcn]\nServer = https://opentuna.cn/archlinuxcn/\$arch" >> /etc/pacman.conf
+echo -e "[archlinuxcn]\nServer = https://mirrors.ustc.edu.cn/archlinuxcn/\$arch" >> /etc/pacman.conf
 
 pacman -Sy --noconfirm archlinux-keyring archlinuxcn-keyring
 
