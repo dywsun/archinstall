@@ -93,8 +93,9 @@ Server = https://mirrors.ustc.edu.cn/archlinux/\$repo/os/\$arch
 Server = http://mirrors.ustc.edu.cn/archlinux/\$repo/os/\$arch
 EOF
 
-echo -e "[archlinuxcn]\nServer = https://mirrors.ustc.edu.cn/archlinuxcn/\$arch" >> /etc/pacman.conf
-
+echo -e "\n[archlinuxcn]\nServer = https://mirrors.ustc.edu.cn/archlinuxcn/\$arch" >> /etc/pacman.conf
+pacman-key --init
+pacman-key --populate
 pacman -Sy --noconfirm archlinux-keyring archlinuxcn-keyring
 
 pacstrap /mnt linux linux-firmware base base-devel vi dhcpcd reflector
