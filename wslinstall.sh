@@ -72,6 +72,7 @@ git_install() {
 pacman-key --init
 pacman-key --populate
 pacman -Sy --noconfirm archlinux-keyring archlinuxcn-keyring
+pacman -Su
 
 pacman_install zsh git
 
@@ -105,7 +106,6 @@ done < /tmp/packages.csv
 [ -z "$pacpackages" ] || pacman_install "$pacpackages"
 aur_install yay
 [ -z "$aurpackages" ] || aur_install "$aurpackages"
-[ -z "$yaypackages" ] || yay_install "$yaypackages"
 [ -z "$gitpackages" ] || git_install "$gitpackages"
 
 # set dotfiles
@@ -117,3 +117,5 @@ sudo -u "$name" cp "$USER_CONFIG_HOME/npm/npmrc" "$USER_HOME/.npmrc" || echo -e 
 
 # clean unused files
 rm -rf $USER_HOME/{.bash_logout,.bash_profile,.bashrc,dotfiles}
+
+[ -z "$yaypackages" ] || yay_install "$yaypackages"
