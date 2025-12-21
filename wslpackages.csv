@@ -1,6 +1,5 @@
 #TAG,PACKAGE NAME(or repo name or git url),DESCRIPTION
 ,neovim,
-,openvpn,
 ,starship,
 ,wget,
 ,zip,
@@ -35,4 +34,3 @@
 ,bmon,
 ,net-tools,
 Y,zsh-fast-syntax-highlighting,
-Y,lolcat,
