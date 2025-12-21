@@ -72,7 +72,6 @@ git_install() {
 pacman-key --init
 pacman-key --populate
 pacman -Sy --noconfirm archlinux-keyring archlinuxcn-keyring
-pacman -Su
 
 pacman_install zsh git
 
@@ -119,3 +118,4 @@ sudo -u "$name" cp "$USER_CONFIG_HOME/npm/npmrc" "$USER_HOME/.npmrc" || echo -e 
 rm -rf $USER_HOME/{.bash_logout,.bash_profile,.bashrc,dotfiles}
 
 [ -z "$yaypackages" ] || yay_install "$yaypackages"
+pacman -Su --noconfirm
