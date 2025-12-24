@@ -103,7 +103,6 @@ while IFS=',' read -a packs; do
 done < /tmp/packages.csv
 
 [ -z "$pacpackages" ] || pacman_install "$pacpackages"
-aur_install yay
 [ -z "$aurpackages" ] || aur_install "$aurpackages"
 [ -z "$gitpackages" ] || git_install "$gitpackages"
 
@@ -117,5 +116,6 @@ sudo -u "$name" cp "$USER_CONFIG_HOME/npm/npmrc" "$USER_HOME/.npmrc" || echo -e 
 # clean unused files
 rm -rf $USER_HOME/{.bash_logout,.bash_profile,.bashrc,dotfiles}
 
+aur_install yay
 [ -z "$yaypackages" ] || yay_install "$yaypackages"
 pacman -Su --noconfirm
