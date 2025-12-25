@@ -14,6 +14,19 @@ done
 
 read -p"your hostname: " HOSTNAME
 
+cat <<EOF >> /etc/wsl.conf
+
+[user]
+default = $name
+
+[network]
+hostname = $HOSTNAME
+generateResolvConf = false
+generateHosts = false
+EOF
+
+# sed -i 's/#DisableSandbox/DisableSandbox/' /etc/pacman.conf
+
 USER_HOME="/home/$name"
 USER_LOCAL_HOME="$USER_HOME/.local"
 USER_CONFIG_HOME="$USER_HOME/.config"
@@ -26,7 +39,7 @@ echo $name $password $HOSTNAME
 # change hostname
 echo $HOSTNAME > /etc/hostname
 
-echo "127.0.0.1	$HOSTNAME.localdomain	$HOSTNAME" >> /etc/hosts
+sed -i "s/DESKTOP[^\.]*/$HOSTNAME/g" /etc/hosts
 
 cat <<EOF > /etc/pacman.d/mirrorlist
 Server = https://mirrors.ustc.edu.cn/archlinux/\$repo/os/\$arch
@@ -72,7 +85,9 @@ git_install() {
 pacman-key --init
 pacman-key --populate
 pacman -Sy --noconfirm archlinux-keyring archlinuxcn-keyring
+pacman -Su --noconfirm
 
+pacman_install base base-devel
 pacman_install zsh git
 
 # create user
@@ -85,6 +100,7 @@ chsh -s /bin/zsh "$name"
 echo -e "$password\n$password" | passwd
 
 pacman_install openssh && systemctl enable sshd
+pacman_install yay
 
 # install packages in packages.csv file
 curl -fsL "$MIRROR_GITHUB_URL_PREFIX/https://raw.github.com/dywsun/archinstall/master/wslpackages.csv" > /tmp/packages.csv
@@ -103,7 +119,6 @@ while IFS=',' read -a packs; do
 done < /tmp/packages.csv
 
 [ -z "$pacpackages" ] || pacman_install "$pacpackages"
-aur_install yay
 [ -z "$aurpackages" ] || aur_install "$aurpackages"
 [ -z "$gitpackages" ] || git_install "$gitpackages"
 
@@ -117,5 +132,6 @@ sudo -u "$name" cp "$USER_CONFIG_HOME/npm/npmrc" "$USER_HOME/.npmrc" || echo -e 
 # clean unused files
 rm -rf $USER_HOME/{.bash_logout,.bash_profile,.bashrc,dotfiles}
 
-[ -z "$yaypackages" ] || yay_install "$yaypackages"
-pacman -Su --noconfirm
+sudo -u "$name" sed -i '76s/^/#/' "$USER_HOME/.config/shell/profile"
+
+# [ -z "$yaypackages" ] || yay_install "$yaypackages"

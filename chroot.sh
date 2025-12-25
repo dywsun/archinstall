@@ -138,12 +138,9 @@ while IFS=',' read -a packs; do
   fi
 done < /tmp/packages.csv
 
+pacman_install yay
 [ -z "$pacpackages" ] || pacman_install "$pacpackages"
-aur_install yay
-[ -z "$aurpackages" ] || aur_install "$aurpackages" 
-[ -z "$yaypackages" ] || yay_install "$yaypackages"
 [ -z "$gitpackages" ] || git_install "$gitpackages" 
-[ -x /opt/YesPlayMusic/yesplaymusic ] && ln -sf /opt/YesPlayMusic/yesplaymusic /bin/yesplaymusic
 
 # set dotfiles
 sudo -u "$name" git clone "$MIRROR_GITHUB_URL/dywsun/dotfiles.git" "$USER_HOME/dotfiles"&& \
@@ -160,3 +157,7 @@ git clone "$MIRROR_GITHUB_URL/vinceliuice/grub2-themes.git" && pushd grub2-theme
 
 # clean unused files
 rm -rf $USER_HOME/{.bash_logout,.bash_profile,.bashrc,dotfiles}
+
+[ -z "$aurpackages" ] || aur_install "$aurpackages" 
+[ -x /opt/YesPlayMusic/yesplaymusic ] && ln -sf /opt/YesPlayMusic/yesplaymusic /bin/yesplaymusic
+[ -z "$yaypackages" ] || yay_install "$yaypackages"
