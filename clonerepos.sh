@@ -16,7 +16,7 @@ read -p "Are you continue clone repos? [yes/no]: " answer
 
 dir="$HOME/.local/src"
 [ -d "$dir" ] || mkdir -p "$dir"
-for repo in {archinstall,dotfiles,dwm,dwmblocks,dmenu,st}; do
+for repo in {archinstall,dotfiles,dwm,dwmblocks,dmenu,st,slock,notes}; do
   git -C "$dir" clone "$remote_user/$repo.git"
   # pushd "$dir/$repo" && git remote add personal "$personal_remote_repo/$repo.git" && popd
 done
